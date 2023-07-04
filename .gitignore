@@ -1,4 +1,5 @@
-
+.next
+node_modules
 .DS_Store
 node_modules/.bin/autoprefixer
 node_modules/.bin/browserslist
