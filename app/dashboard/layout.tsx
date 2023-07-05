@@ -1,4 +1,5 @@
-import "./globals.css";
+import { Suspense } from "react";
+import Nav from "./nav";
 
 export const metadata = {
   title: "Get It Branded",
@@ -11,8 +12,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full bg-gray-50">
-      <body className="h-full">{children}</body>
-    </html>
+    <div>
+      <Suspense>
+        <Nav />
+      </Suspense>
+      {children}
+    </div>
   );
 }
