@@ -3,7 +3,7 @@
 import Button from "@/app/components/Button";
 import Input from "@/app/components/Input";
 import { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -27,26 +27,51 @@ const AuthForm = () => {
     defaultValues: {
       name: "",
       email: "",
-      passsword: "",
+      password: "",
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
     if (variant === "REGISTER") {
-      // Axios registers
+      if (data.name && data.email && data.password) {
+        try {
+          const response = await fetch(
+            "http://dfcf-203-81-205-149.ngrok-free.app/api/register",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                username: data.name,
+                email: data.email,
+                password: data.password,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const result = await response.json();
+
+          if (result.message === "success") {
+            console.log("Success: ", result);
+          } else {
+            console.log("Unsuccessful: ", result);
+          }
+        } catch (error) {
+          console.log("Error: ", error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        console.log("Error: ", "Missing fields");
+      }
     }
 
     if (variant === "LOGIN") {
       // NextAuth SignIn
     }
-  };
-
-  const socialAction = (action: string) => {
-    setIsLoading(true);
-
-    // NextAuth Social Signin
   };
 
   return (
@@ -76,6 +101,7 @@ const AuthForm = () => {
               register={register}
               errors={errors}
               disabled={isLoading}
+              required={variant === "REGISTER" ? true : false}
             />
           )}
           <Input
@@ -85,6 +111,7 @@ const AuthForm = () => {
             register={register}
             errors={errors}
             disabled={isLoading}
+            required
           />
           <Input
             id="password"
@@ -93,6 +120,7 @@ const AuthForm = () => {
             register={register}
             errors={errors}
             disabled={isLoading}
+            required
           />
           <div>
             <Button disabled={isLoading} fullWidth={true} type="submit">
