@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import PostModal from "../components/PostModal";
 import { useState } from "react";
 
@@ -67,9 +68,10 @@ export default function Home() {
                 />
               </div> */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                  <Link className="text-sm font-medium text-gray-900 truncate dark:text-white"
+                  href="/post/a">
                     {c.text}
-                  </p>
+                  </Link>
                   <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                     Posted on {c.platorm} at {c.createdAt}
                   </p>
