@@ -1,7 +1,8 @@
+import OnboardForm from "@/app/components/OnboardForm";
 import React from "react";
 
 const SettingsPage = () => {
-  return <div>This is settings page</div>;
+  return <OnboardForm />;
 };
 
 export default SettingsPage;
