@@ -1,6 +1,6 @@
 *.py[cod]
 .pytest_cache
-
+.idea/
 # Packages
 *.egg
 *.egg-info

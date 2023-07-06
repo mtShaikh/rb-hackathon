@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 
 const navigation = [
-  { name: "Activities", href: "/dashboard" },
+  { name: "Posts", href: "/dashboard" },
   { name: "Settings", href: "/dashboard/settings" },
 ];
 

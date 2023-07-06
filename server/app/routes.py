@@ -8,6 +8,7 @@ from flask import Blueprint
 # App imports
 from app import db_manager
 from app import login_manager
+from app.views import post_views
 from .views import (
     error_views,
     account_management_views,
@@ -63,11 +64,23 @@ bp.add_url_rule(
    methods=["POST"],
 )
 
+bp.add_url_rule(
+   "/api/authorize", view_func=account_management_views.authorize_twitter, methods=["POST"]
+)
+
+bp.add_url_rule(
+   "/api/token", view_func=account_management_views.get_access_token, methods=["POST"]
+)
+
 # Login Required API
 bp.add_url_rule("/api/user", view_func=account_management_views.user)
 
 bp.add_url_rule(
    "/api/email", view_func=account_management_views.email, methods=["POST"]
+)
+
+bp.add_url_rule(
+   "/api/posts", view_func=post_views.create_post, methods=["POST"]
 )
 
 # Admin required

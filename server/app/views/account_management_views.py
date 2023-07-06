@@ -8,7 +8,7 @@ from pydantic import ValidationError
 from flask_login import login_user, logout_user, login_required, current_user
 
 # App imports
-from ..services import account_management_services
+from ..services import account_management_services, platform_services
 from ..utils import custom_errors, sanitization
 from ..utils.error_utils import (
     get_business_requirement_error_response,
@@ -94,3 +94,13 @@ def email():
         return get_db_error_response(db_error=e, http_status_code=500)
 
     return {"message": "success"}, 201
+
+# @login_required
+def authorize_twitter():
+    url =  platform_services.request_token_from_twitter()
+    return {"url": url}, 200
+
+# @login_required
+def get_access_token():
+    url = request.json.get("url")
+    return platform_services.get_access_token(url)

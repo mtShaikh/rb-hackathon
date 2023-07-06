@@ -38,7 +38,7 @@ const AuthForm = () => {
       if (data.name && data.email && data.password) {
         try {
           const response = await fetch(
-            "http://dfcf-203-81-205-149.ngrok-free.app/api/register",
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/register`,
             {
               method: "POST",
               body: JSON.stringify({
