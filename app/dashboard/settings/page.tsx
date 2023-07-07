@@ -2,9 +2,14 @@
 
 import OnboardForm from "@/app/components/OnboardForm";
 import { TwitterButton } from "@/app/components/TwitterButton";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const SettingsPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) router.push("/");
+  }, []);
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <h1 className="mt-12 text-3xl font-semibold uppercase">Settings</h1>

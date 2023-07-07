@@ -3,8 +3,8 @@
 import { Fragment } from "react";
 import { usePathname } from "next/navigation";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const navigation = [
   { name: "Posts", href: "/dashboard" },
@@ -17,6 +17,12 @@ function classNames(...classes: string[]) {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const signOut = () => {
+    localStorage.removeItem("authToken");
+    router.push("/");
+  };
 
   return (
     <Disclosure as="nav" className="bg-white shadow-sm">

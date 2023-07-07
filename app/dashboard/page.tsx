@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import PostModal from "../components/PostModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const CONTENT = [
   {
@@ -32,6 +33,10 @@ const CONTENT = [
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) router.push("/");
+  }, []);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -55,8 +60,8 @@ export default function Home() {
           </a>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {CONTENT.map((c) => (
-            <li className="pb-3 sm:pb-4">
+          {CONTENT.map((c, i) => (
+            <li className="pb-3 sm:pb-4" key={i}>
               <div className="flex items-center space-x-4">
                 {/*  <div className="flex-shrink-0">
                 <Image
@@ -68,17 +73,22 @@ export default function Home() {
                 />
               </div> */}
                 <div className="flex-1 min-w-0">
-                  <Link className="text-sm font-medium text-gray-900 truncate dark:text-white"
-                  href="/post/a">
+                  <Link
+                    className="text-sm font-medium text-gray-900 truncate dark:text-white"
+                    href="#"
+                  >
                     {c.text}
                   </Link>
                   <p className="text-sm text-gray-500 truncate dark:text-gray-400">
                     Posted on {c.platorm} at {c.createdAt}
                   </p>
                 </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                <Link
+                  className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
+                  href="/post/a"
+                >
                   View
-                </div>
+                </Link>
               </div>
             </li>
           ))}

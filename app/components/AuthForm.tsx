@@ -2,14 +2,20 @@
 
 import Button from "@/app/components/Button";
 import Input from "@/app/components/Input";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.removeItem("authToken");
+  }, []);
 
   const toggleVariant = useCallback(() => {
     if (variant === "LOGIN") {
@@ -56,6 +62,7 @@ const AuthForm = () => {
 
           if (result.message === "success") {
             console.log("Success: ", result);
+            router.push("/onboarding");
           } else {
             console.log("Unsuccessful: ", result);
           }
@@ -70,7 +77,38 @@ const AuthForm = () => {
     }
 
     if (variant === "LOGIN") {
-      // NextAuth SignIn
+      if (data.email && data.password) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/login`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                email: data.email,
+                password: data.password,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const result = await response.json();
+
+          if (result.message === "success") {
+            localStorage.setItem("authToken", result.token);
+            router.push("/dashboard");
+          } else {
+            console.log("Unsuccessful: ", result);
+          }
+        } catch (error) {
+          console.log("Error: ", error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        console.log("Error: ", "Missing fields");
+      }
     }
   };
 

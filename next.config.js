@@ -5,6 +5,7 @@ const nextConfig = {
       "avatars.githubusercontent.com",
       "avatar.vercel.sh",
       "img.freepik.com",
+      "www.emotivebrand.com",
     ],
   },
   experimental: {
