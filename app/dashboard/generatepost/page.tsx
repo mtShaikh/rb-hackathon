@@ -47,7 +47,7 @@ const GeneratePostPage = () => {
   return (
     <>
       {isLoading && (
-        <div className="flex content-center items-center h-96 w-100">
+        <div className="flex content-center items-center h-96 w-100 justify-center">
           <div role="status">
             <svg
               aria-hidden="true"
