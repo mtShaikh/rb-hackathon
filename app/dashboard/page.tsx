@@ -38,10 +38,6 @@ export default function Home() {
     if (!localStorage.getItem("authToken")) router.push("/");
   }, []);
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
-
   const closeModal = () => {
     setShowModal(false);
   };
@@ -51,13 +47,12 @@ export default function Home() {
       {showModal && <PostModal closeModal={closeModal} />}
       <div className="max-w-screen-md m-auto">
         <div className="flex justify-end">
-          <a
-            href="#"
-            onClick={toggleModal}
+          <Link
+            href="/dashboard/generatepost"
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >
             Generate Post
-          </a>
+          </Link>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {CONTENT.map((c, i) => (

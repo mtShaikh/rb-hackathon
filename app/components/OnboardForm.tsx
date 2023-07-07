@@ -5,11 +5,13 @@ import Input from "@/app/components/Input";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, set, useForm } from "react-hook-form";
 import Textarea from "./Textarea";
+import { useRouter } from "next/navigation";
 
 type Variant = "BRAND" | "SOCIALACCOUNT";
 
 const OnboardForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -30,6 +32,12 @@ const OnboardForm = () => {
     setIsLoading(true);
 
     // NextAuth Social Signin
+  };
+
+  const updateBrandInfo = () => {
+    setTimeout(() => {
+      router.push("/");
+    }, 1000);
   };
 
   return (
@@ -68,7 +76,7 @@ const OnboardForm = () => {
               disabled={isLoading}
             />
             <div>
-              <Button disabled={isLoading} fullWidth={true} type="submit">
+              <Button disabled={isLoading} fullWidth={true} type="submit" onClick={updateBrandInfo}>
                 Save
               </Button>
             </div>

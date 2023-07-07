@@ -22,6 +22,35 @@ const PostModal = ({ closeModal }: any) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
   };
+
+  const generatePost = async () => {
+    let token = localStorage.getItem("authToken");
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/generate_post`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.message === "success") {
+        console.log("Success: ", result);
+      } else {
+        console.log("Unsuccessful: ", result);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className="fixed z-10 inset-0 overflow-y-auto"
@@ -77,6 +106,7 @@ const PostModal = ({ closeModal }: any) => {
           <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse pr-5">
             <Link
               href="#"
+              onClick={generatePost}
               type="button"
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-500 text-base font-medium text-white hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
