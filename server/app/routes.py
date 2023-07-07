@@ -1,7 +1,8 @@
 # Standard Library imports
 
 # Core Flask imports
-from flask import Blueprint
+from flask import Blueprint, request
+from .services.platform_services import authorize_token
 
 # Third-party imports
 
@@ -25,6 +26,13 @@ db = db_manager.session
 @bp.before_app_request
 def before_request():
     db()
+    try:
+        authorization = request.headers['authorization']
+        token = authorization.replace("Bearer ")
+        user = authorize_token(token)
+        request.user = user
+    except Exception as e:
+        request.user = None
 
 @bp.teardown_app_request
 def shutdown_session(response_or_exc):
@@ -54,6 +62,10 @@ bp.add_url_rule("/settings", view_func=static_views.settings)
 # Public API
 bp.add_url_rule(
    "/api/login", view_func=account_management_views.login_account, methods=["POST"]
+)
+
+bp.add_url_rule(
+   "/api/generate_post", view_func=account_management_views.login_account, methods=["POST"]
 )
 
 bp.add_url_rule("/logout", view_func=account_management_views.logout_account)
