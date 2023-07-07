@@ -9,6 +9,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 
 # App imports
 from ..services import account_management_services, platform_services
+from ..services.platform_services import generate_user_token
 from ..utils import custom_errors, sanitization
 from ..utils.error_utils import (
     get_business_requirement_error_response,
@@ -59,8 +60,11 @@ def login_account():
         )
 
     login_user(user_model, remember=True)
+    token = generate_user_token(user_model)
 
-    return {"message": "success"}
+
+
+    return {"message": "success", "token" : token}
 
 
 def logout_account():
