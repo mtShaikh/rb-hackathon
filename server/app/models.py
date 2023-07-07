@@ -86,9 +86,7 @@ class UserSettings(Base):
     setting_id = Column(Integer, primary_key=True)
     brand_title = Column(Text)
     brand_description = Column(Text)
-    schedule = Column(
-        ChoiceType({"daily": "daily", "bi-weekly": "bi-weekly", "weekly": "weekly", "monthly": "monthly"}), nullable=False
-    )
+    schedule = Column(Text)
     post_genre = Column(Text)
 
     def get_id(self):
