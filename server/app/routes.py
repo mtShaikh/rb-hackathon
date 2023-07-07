@@ -28,7 +28,7 @@ def before_request():
     db()
     try:
         authorization = request.headers['authorization']
-        token = authorization.replace("Bearer ")
+        token = authorization.replace("Bearer ","")
         user = authorize_token(token)
         request.user = user
     except Exception as e:
@@ -65,7 +65,7 @@ bp.add_url_rule(
 )
 
 bp.add_url_rule(
-   "/api/generate_post", view_func=account_management_views.login_account, methods=["POST"]
+   "/api/generate_post", view_func=account_management_views.generate_post, methods=["POST"]
 )
 
 bp.add_url_rule("/logout", view_func=account_management_views.logout_account)
@@ -89,6 +89,10 @@ bp.add_url_rule("/api/user", view_func=account_management_views.user)
 
 bp.add_url_rule(
    "/api/email", view_func=account_management_views.email, methods=["POST"]
+)
+
+bp.add_url_rule(
+   "/api/generate_post", view_func=account_management_views.generate_post, methods=["POST"]
 )
 
 bp.add_url_rule(

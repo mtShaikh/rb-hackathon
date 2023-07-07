@@ -26,6 +26,14 @@ def get_business_requirement_error_response(business_logic_error, http_status_co
     }
     return resp, http_status_code
 
+def get_authentication_failed_error():
+    resp = {
+        "errors": {
+            "display_error": "Authentation Failed",
+            "internal_error_code": "401",
+        }
+    }
+    return resp, 401
 
 def get_db_error_response(db_error, http_status_code):
     resp = {

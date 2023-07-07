@@ -10,6 +10,7 @@ class Config(object):
     SESSION_COOKIE_HTTPONLY = os.environ.get("SESSION_COOKIE_HTTPONLY")
     REMEMBER_COOKIE_HTTPONLY = os.environ.get("REMEMBER_COOKIE_HTTPONLY")
     SESSION_COOKIE_SAMESITE = os.environ.get("SESSION_COOKIE_SAMESITE")
+    OPENAI_KEY = os.environ.get("OPENAI_KEY")
 
     @staticmethod
     def init_app(app):
